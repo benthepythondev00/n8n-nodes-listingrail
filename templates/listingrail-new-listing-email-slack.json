@@ -1,0 +1,103 @@
+{
+  "name": "Listingrail: new listing to email and Slack",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "monitorId": "",
+        "event": "newListing",
+        "includeFirstCheck": false
+      },
+      "id": "c39c79b8-ea88-432b-a56e-f6b2553007a9",
+      "name": "New listing",
+      "type": "n8n-nodes-listingrail.listingrailTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "alerts@example.com",
+        "toEmail": "you@example.com",
+        "subject": "=New listing in {{ $json.monitor_location }}: {{ $json.price }} {{ $json.currency }}",
+        "emailFormat": "text",
+        "text": "={{ $json.title || 'New listing' }}: {{ $json.price }} {{ $json.currency }}{{ $json.beds != null ? ', ' + $json.beds + ' beds' : '' }}\n{{ $json.address }}\n{{ $json.url }}",
+        "options": {}
+      },
+      "id": "5f4560d3-19b6-4a44-b26d-3d8d487b8a96",
+      "name": "Send email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        260,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list"
+        },
+        "text": "={{ $json.title || 'New listing' }}: {{ $json.price }} {{ $json.currency }}{{ $json.beds != null ? ', ' + $json.beds + ' beds' : '' }}\n{{ $json.address }}\n{{ $json.url }}",
+        "otherOptions": {}
+      },
+      "id": "b399f3df-1f2e-45e9-858c-9f01a59dd3ed",
+      "name": "Post to Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        260,
+        -100
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## New listing to email and Slack\n1. Install the community node **n8n-nodes-listingrail** (Settings > Community Nodes).\n2. Create a Listingrail credential with your API key (free key: listingrail.com).\n3. Pick your monitor on the trigger. No monitor yet? Create one at listingrail.com/monitors/.\n4. Set the SMTP credential and addresses on Send email. For Slack, enable Post to Slack and pick a channel.\n5. Activate. Listingrail checks monitors daily at 06:20 UTC; the trigger polls hourly at no credit cost.",
+        "width": 520,
+        "height": 300
+      },
+      "id": "1d6ba8d2-e60b-4252-8bce-e06488065b25",
+      "name": "Setup note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -420
+      ]
+    }
+  ],
+  "connections": {
+    "New listing": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Post to Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

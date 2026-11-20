@@ -1,0 +1,14 @@
+{
+	"node": "n8n-nodes-listingrail.listingrailTrigger",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Data & Storage", "Marketing & Content"],
+	"resources": {
+		"credentialDocumentation": [
+			{ "url": "https://github.com/benthepythondev00/n8n-nodes-listingrail#credentials" }
+		],
+		"primaryDocumentation": [
+			{ "url": "https://listingrail.com/guides/n8n-property-alerts/" }
+		]
+	}
+}

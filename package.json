@@ -1,0 +1,61 @@
+{
+	"name": "n8n-nodes-listingrail",
+	"version": "0.1.0",
+	"description": "n8n nodes for Listingrail: search sale and rental listings from 22 property portals and trigger workflows on new listings and price drops.",
+	"license": "MIT",
+	"homepage": "https://listingrail.com/guides/n8n-property-alerts/",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n",
+		"listingrail",
+		"real estate",
+		"property listings",
+		"rental listings",
+		"price drop"
+	],
+	"author": {
+		"name": "Listingrail",
+		"email": "hello@listingrail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/benthepythondev00/n8n-nodes-listingrail.git"
+	},
+	"bugs": {
+		"url": "https://github.com/benthepythondev00/n8n-nodes-listingrail/issues"
+	},
+	"scripts": {
+		"build": "n8n-node build",
+		"build:watch": "tsc --watch",
+		"dev": "n8n-node dev",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"test": "npm run build && node --test test/*.test.js",
+		"release": "n8n-node release",
+		"prepublishOnly": "n8n-node prerelease"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"strict": true,
+		"credentials": [
+			"dist/credentials/ListingrailApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/Listingrail/Listingrail.node.js",
+			"dist/nodes/ListingrailTrigger/ListingrailTrigger.node.js"
+		]
+	},
+	"devDependencies": {
+		"@n8n/node-cli": "0.56.1",
+		"eslint": "9.32.0",
+		"prettier": "3.6.2",
+		"release-it": "^19.2.4",
+		"typescript": "5.9.2"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}

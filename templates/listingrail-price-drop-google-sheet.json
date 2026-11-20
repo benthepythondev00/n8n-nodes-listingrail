@@ -1,0 +1,178 @@
+{
+  "name": "Listingrail: price drop to Google Sheet",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "monitorId": "",
+        "event": "priceDrop",
+        "includeFirstCheck": false
+      },
+      "id": "a0ab11fa-579e-4bcd-b733-314e192555a6",
+      "name": "Price drop",
+      "type": "n8n-nodes-listingrail.listingrailTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d0b2e0f0-eec7-4855-a7e0-7a30d8bedb32",
+              "name": "checked_at",
+              "value": "={{ $json.checked_at }}",
+              "type": "string"
+            },
+            {
+              "id": "93c4f6aa-f7e9-4aa6-980f-4b5bf950d53b",
+              "name": "location",
+              "value": "={{ $json.monitor_location }}",
+              "type": "string"
+            },
+            {
+              "id": "8fe0eb39-85a1-4a16-9073-bae89ca53296",
+              "name": "address",
+              "value": "={{ $json.address }}",
+              "type": "string"
+            },
+            {
+              "id": "516896cb-fa5e-44ca-9ace-f0e931a2bcfe",
+              "name": "beds",
+              "value": "={{ $json.beds }}",
+              "type": "number"
+            },
+            {
+              "id": "b730e9a4-9b8d-4dfc-bf90-8e96de8def96",
+              "name": "old_price",
+              "value": "={{ $json.old_price }}",
+              "type": "number"
+            },
+            {
+              "id": "0ef41d50-9625-4b87-97ec-f8caea44b228",
+              "name": "new_price",
+              "value": "={{ $json.new_price }}",
+              "type": "number"
+            },
+            {
+              "id": "3c6357d9-c36b-4d98-9543-86d87db4a43a",
+              "name": "drop_amount",
+              "value": "={{ $json.drop_amount }}",
+              "type": "number"
+            },
+            {
+              "id": "f7272d9c-fef0-4ae5-8119-f159a8f4798d",
+              "name": "drop_percent",
+              "value": "={{ $json.drop_percent }}",
+              "type": "number"
+            },
+            {
+              "id": "16b7bff9-4f1f-4a57-8833-b4cb21d8fb4f",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "a03fde2b-b5fa-43f2-9d89-412f1ab3b761",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9073bc02-4615-499a-a515-f022a17f3750",
+      "name": "Pick columns",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "900d0613-7936-441d-9484-8f1a9ba84436",
+      "name": "Append to Google Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        480,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Price drop to Google Sheet\n1. Install the community node **n8n-nodes-listingrail** (Settings > Community Nodes).\n2. Create a Listingrail credential with your API key.\n3. Pick your monitor on the trigger (listingrail.com/monitors/).\n4. Make a sheet whose first row is:\n`checked_at, location, address, beds, old_price, new_price, drop_amount, drop_percent, url, id`\n5. Paste the sheet URL into Append to Google Sheet and activate.",
+        "width": 560,
+        "height": 300
+      },
+      "id": "2d49783a-e982-490a-81ea-b3c2d6c23b38",
+      "name": "Setup note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -380
+      ]
+    }
+  ],
+  "connections": {
+    "Price drop": {
+      "main": [
+        [
+          {
+            "node": "Pick columns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick columns": {
+      "main": [
+        [
+          {
+            "node": "Append to Google Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}
