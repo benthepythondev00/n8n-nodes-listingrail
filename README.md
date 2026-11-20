@@ -5,11 +5,19 @@ n8n community nodes for [Listingrail](https://listingrail.com), a real estate li
 - **Listingrail Trigger**: starts a workflow when a Listingrail monitor finds a **new listing** or a **price drop**.
 - **Listingrail**: search listings, get a listing's details or price history, create and manage monitors, list the portals.
 
-Step-by-step guide with screenshots of the setup: [n8n property alerts](https://listingrail.com/guides/n8n-property-alerts/).
+Step-by-step setup guide: [n8n property alerts](https://listingrail.com/guides/n8n-property-alerts/).
 
 ## Installation
 
-Self-hosted n8n: **Settings > Community Nodes > Install**, enter `n8n-nodes-listingrail`, and confirm. See the [n8n community nodes docs](https://docs.n8n.io/integrations/community-nodes/installation/).
+Self-hosted n8n, from the GitHub release (works now):
+
+```bash
+cd ~/.n8n/nodes
+npm install https://github.com/benthepythondev00/n8n-nodes-listingrail/releases/download/0.1.0/n8n-nodes-listingrail-0.1.0.tgz
+# then restart n8n
+```
+
+Once the package is on npm: **Settings > Community Nodes > Install**, enter `n8n-nodes-listingrail`, and confirm. See the [n8n community nodes docs](https://docs.n8n.io/integrations/community-nodes/installation/).
 
 On n8n Cloud, community nodes appear only after n8n verifies them. Until then, use the HTTP Request workflow from the [guide](https://listingrail.com/guides/n8n-property-alerts/#no-node), which needs no install.
 
